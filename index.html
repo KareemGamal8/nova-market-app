@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Nova Market - Explore Everything You Need</title>
+  </head>
+  <body>
+    <header>
+      <div class="header-container container">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-bag-shopping"></i>Nova <span>Market</span>
+        </a>
+
+        <!-- Desktop Navigation (Visible > 1024px) -->
+        <nav class="desktop-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+          </ul>
+        </nav>
+
+        <!-- Desktop Search Form (Visible > 1024px) -->
+        <form class="search-form desktop-search" id="searchFormDesktop" action="products.html">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search products..."
+            class="search-input"
+            id="searchInputDesktop"
+          />
+          <button type="submit" class="search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Cart <span class="cart-count" id="cartCount"></span>
+          </a>
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation (Visible <= 1024px when active) -->
+        <nav class="mobile-nav" id="mobileNav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+          </ul>
+          <form class="search-form mobile-search" id="searchFormMobile" action="products.html">
+            <input
+              type="text"
+              name="search"
+              placeholder="Search products..."
+              class="search-input"
+              id="searchInputMobile"
+            />
+            <button type="submit" class="search-btn" aria-label="Search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+          <h1>Discover Everything You Need</h1>
+          <p>
+            Explore top-rated electronics, fashion, jewelry, and daily
+            essentials all in one store.
+          </p>
+          <a href="#products" class="btn-shop">Shop Now</a>
+        </div>
+      </section>
+      <section id="categories">
+        <div class="categories-container container">
+          <div class="section-title">
+            <h2>Popular Categories</h2>
+            <p>Explore products across our diverse collection</p>
+          </div>
+          <div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+      </section>
+      <section id="products" class="products-section">
+        <div class="products-container container">
+          <div class="section-title">
+            <h2>Featured Products</h2>
+            <p>Discover our top picks for this season</p>
+          </div>
+          <div class="products-grid" id="productsGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-container container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <i class="fa-solid fa-bag-shopping"></i>Nova <span>Market</span>
+          </a>
+          <p>
+            Your one-stop shop for electronics, fashion, and daily essentials.
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <p>&copy; 2026 Nova Market. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
