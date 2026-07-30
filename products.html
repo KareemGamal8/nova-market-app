@@ -43,8 +43,8 @@
         </form>
 
         <div class="header-actions">
-          <a href="cart.html" class="cart-btn">
-            <i class="fa-solid fa-cart-shopping"></i> Cart <span class="cart-count" id="cartCount"></span>
+          <a href="cart.html" class="cart-btn" aria-label="Cart">
+            <i class="fa-solid fa-cart-shopping"></i><span class="cart-count" id="cartCount"></span>
           </a>
           <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
             <i class="fa-solid fa-bars"></i>
@@ -73,6 +73,7 @@
       </div>
     </header>
     <main>
+      <div class="filters-backdrop" id="filtersBackdrop"></div>
       <section id="products" class="products-section">
         <div class="products-container container">
           <div class="section-title">
@@ -81,10 +82,89 @@
               Discover our full collection of electronics, fashion, and more
             </p>
           </div>
-          <div class="products-grid" id="productsGrid"></div>
-          <div class="paginations-buttons" id="paginationsButtons">
-            <button class="pagination-btn" id="previousBtn">Previous</button>
-            <button class="pagination-btn" id="nextBtn">Next</button>
+
+          <div class="products-layout">
+            <!-- Sidebar Filters -->
+            <aside class="filters-sidebar" id="filtersSidebar">
+              <div class="filters-sidebar-header">
+                <h3>Filters</h3>
+                <button class="close-filters-btn" id="closeFiltersBtn" aria-label="Close Filters">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <div class="filter-group">
+                <label for="categoryFilter" class="filter-label">Category</label>
+                <select id="categoryFilter" class="filter-select">
+                  <option value="">All Categories</option>
+                  <!-- Categories will be dynamically populated -->
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <span class="filter-label">Price Range ($)</span>
+                <div class="price-range-inputs">
+                  <input type="number" id="minPrice" placeholder="Min" class="price-input" min="0" />
+                  <span class="price-separator">-</span>
+                  <input type="number" id="maxPrice" placeholder="Max" class="price-input" min="0" />
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <span class="filter-label">Minimum Rating</span>
+                <div class="rating-filter-options">
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="0" checked />
+                    <span>All Ratings</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="4" />
+                    <span>4.0 ★ & above</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="3" />
+                    <span>3.0 ★ & above</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="2" />
+                    <span>2.0 ★ & above</span>
+                  </label>
+                </div>
+              </div>
+
+              <button class="reset-filters-btn" id="resetFiltersBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filters
+              </button>
+            </aside>
+
+            <!-- Products Content Area -->
+            <div class="products-content">
+              <div class="products-toolbar">
+                <button class="mobile-filters-btn" id="mobileFiltersBtn">
+                  <i class="fa-solid fa-sliders"></i> Filters
+                </button>
+                
+                <span class="products-results-count" id="productsCount">Showing 0 products</span>
+                
+                <div class="sort-container">
+                  <label for="sortBy" class="sort-label">Sort By:</label>
+                  <select id="sortBy" class="sort-select">
+                    <option value="featured">Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating-desc">Rating: High to Low</option>
+                    <option value="title-asc">Alphabetical: A-Z</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="products-grid" id="productsGrid"></div>
+              
+              <div class="paginations-buttons" id="paginationsButtons">
+                <button class="pagination-btn" id="previousBtn">Previous</button>
+                <button class="pagination-btn" id="nextBtn">Next</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
