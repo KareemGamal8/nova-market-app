@@ -107,7 +107,9 @@ const renderCartPage = () => {
     0,
   );
   const shipping = 10.0;
-  const total = subtotal + shipping;
+  const netPrice = subtotal + shipping;
+  const tax = subtotal * 0.1;
+  const total = netPrice + tax;
 
   cartLayout.innerHTML = `
     <div class="cart-items-list">
@@ -118,7 +120,7 @@ const renderCartPage = () => {
           <img src="${item.image}" alt="${item.title}" class="cart-item-image">
           <div class="cart-item-details">
             <h4 class="cart-item-title">${item.title}</h4>
-            <span class="cart-item-price">$${item.price}</span>
+            <span class="cart-item-price">$${Number(item.price).toFixed(2)} each</span>
           </div>
           <div class="cart-item-quantity">
             <button onclick="updateQuantity(${item.id}, -1)">-</button>
@@ -143,6 +145,14 @@ const renderCartPage = () => {
       <div class="summary-row">
         <span>Estimated Shipping</span>
         <span>$${shipping.toFixed(2)}</span>
+      </div>
+      <div class="summary-row">
+        <span>Net Price</span>
+        <span>$${netPrice.toFixed(2)}</span>
+      </div>
+      <div class="summary-row">
+        <span>Estimated Tax (10%)</span>
+        <span>$${tax.toFixed(2)}</span>
       </div>
       <div class="summary-row total-row">
         <span>Total</span>
