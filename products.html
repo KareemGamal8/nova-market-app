@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Nova Market - Products</title>
+  </head>
+  <body>
+    <header>
+      <div class="header-container container">
+        <a href="index.html" class="logo">
+          <i class="fa-solid fa-bag-shopping"></i>Nova <span>Market</span>
+        </a>
+
+        <!-- Desktop Navigation (Visible > 1024px) -->
+        <nav class="desktop-nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+          </ul>
+        </nav>
+
+        <!-- Desktop Search Form (Visible > 1024px) -->
+        <form class="search-form desktop-search" id="searchFormDesktop" action="products.html">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search products..."
+            class="search-input"
+            id="searchInputDesktop"
+          />
+          <button type="submit" class="search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn" aria-label="Cart">
+            <i class="fa-solid fa-cart-shopping"></i><span class="cart-count" id="cartCount"></span>
+          </a>
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation (Visible <= 1024px when active) -->
+        <nav class="mobile-nav" id="mobileNav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+          </ul>
+          <form class="search-form mobile-search" id="searchFormMobile" action="products.html">
+            <input
+              type="text"
+              name="search"
+              placeholder="Search products..."
+              class="search-input"
+              id="searchInputMobile"
+            />
+            <button type="submit" class="search-btn" aria-label="Search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="filters-backdrop" id="filtersBackdrop"></div>
+      <section id="products" class="products-section">
+        <div class="products-container container">
+          <div class="section-title">
+            <h2>All Products</h2>
+            <p>
+              Discover our full collection of electronics, fashion, and more
+            </p>
+          </div>
+
+          <div class="products-layout">
+            <!-- Sidebar Filters -->
+            <aside class="filters-sidebar" id="filtersSidebar">
+              <div class="filters-sidebar-header">
+                <h3>Filters</h3>
+                <button class="close-filters-btn" id="closeFiltersBtn" aria-label="Close Filters">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <div class="filter-group">
+                <label for="categoryFilter" class="filter-label">Category</label>
+                <select id="categoryFilter" class="filter-select">
+                  <option value="">All Categories</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="jewelery">Jewelry</option>
+                  <option value="mens-clothing">Men's Clothing</option>
+                  <option value="womens-clothing">Women's Clothing</option>
+                  <option value="beauty-care">Beauty & Care</option>
+                  <option value="home-living">Home & Living</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <span class="filter-label">Price Range ($)</span>
+                <div class="price-range-inputs">
+                  <input type="number" id="minPrice" placeholder="Min" class="price-input" min="0" />
+                  <span class="price-separator">-</span>
+                  <input type="number" id="maxPrice" placeholder="Max" class="price-input" min="0" />
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <span class="filter-label">Minimum Rating</span>
+                <div class="rating-filter-options">
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="0" checked />
+                    <span>All Ratings</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="4" />
+                    <span>4.0 ★ & above</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="3" />
+                    <span>3.0 ★ & above</span>
+                  </label>
+                  <label class="rating-radio-label">
+                    <input type="radio" name="ratingFilter" value="2" />
+                    <span>2.0 ★ & above</span>
+                  </label>
+                </div>
+              </div>
+
+              <button class="reset-filters-btn" id="resetFiltersBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filters
+              </button>
+            </aside>
+
+            <!-- Products Content Area -->
+            <div class="products-content">
+              <div class="products-toolbar">
+                <button class="mobile-filters-btn" id="mobileFiltersBtn">
+                  <i class="fa-solid fa-sliders"></i> Filters
+                </button>
+                
+                <span class="products-results-count" id="productsCount">Showing 4 products</span>
+                
+                <div class="sort-container">
+                  <label for="sortBy" class="sort-label">Sort By:</label>
+                  <select id="sortBy" class="sort-select">
+                    <option value="featured">Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating-desc">Rating: High to Low</option>
+                    <option value="title-asc">Alphabetical: A-Z</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="products-grid" id="productsGrid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                  <div class="product-image-wrapper">
+                    <a href="product-details.html?id=1">
+                      <img src="assets/essence-mascara.png" alt="Essence Mascara Lash Princess" />
+                    </a>
+                    <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">Essence Mascara Lash Princess</h3>
+                    <span class="product-brand">ESSENCE</span>
+                    <div class="product-rating">
+                      <i class="fa-solid fa-star"></i> 2.56 <span>(3 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                      <span class="current-price">$9.99</span>
+                      <span class="original-price">$11.16</span>
+                    </div>
+                    <div class="product-actions">
+                      <button class="add-to-cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                  <div class="product-image-wrapper">
+                    <a href="product-details.html?id=2">
+                      <img src="assets/eyeshadow-palette.png" alt="Eyeshadow Palette with Mirror" />
+                    </a>
+                    <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">Eyeshadow Palette with Mirror</h3>
+                    <span class="product-brand">GLAMOUR BEAUTY</span>
+                    <div class="product-rating">
+                      <i class="fa-solid fa-star"></i> 2.86 <span>(3 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                      <span class="current-price">$19.99</span>
+                      <span class="original-price">$24.43</span>
+                    </div>
+                    <div class="product-actions">
+                      <button class="add-to-cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                  <div class="product-image-wrapper">
+                    <a href="product-details.html?id=3">
+                      <img src="assets/powder-canister.png" alt="Powder Canister" />
+                    </a>
+                    <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">Powder Canister</h3>
+                    <span class="product-brand">VELVET TOUCH</span>
+                    <div class="product-rating">
+                      <i class="fa-solid fa-star"></i> 4.64 <span>(3 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                      <span class="current-price">$14.99</span>
+                      <span class="original-price">$16.63</span>
+                    </div>
+                    <div class="product-actions">
+                      <button class="add-to-cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                  <div class="product-image-wrapper">
+                    <a href="product-details.html?id=4">
+                      <img src="assets/red-lipstick.png" alt="Red Lipstick" />
+                    </a>
+                    <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">Red Lipstick</h3>
+                    <span class="product-brand">CHIC COSMETICS</span>
+                    <div class="product-rating">
+                      <i class="fa-solid fa-star"></i> 4.36 <span>(3 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                      <span class="current-price">$12.99</span>
+                      <span class="original-price">$14.79</span>
+                    </div>
+                    <div class="product-actions">
+                      <button class="add-to-cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="paginations-buttons" id="paginationsButtons">
+                <button class="pagination-btn" id="previousBtn">Previous</button>
+                <button class="pagination-btn" id="nextBtn">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <i class="fa-solid fa-bag-shopping"></i>Nova <span>Market</span>
+          </a>
+          <p>
+            Your one-stop shop for electronics, fashion, and daily essentials.
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <p>&copy; 2026 Nova Market. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
