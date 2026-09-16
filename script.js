@@ -40,4 +40,4 @@ fetch("https://dummyjson.com/products?limit=12")
       .join("");
   });
 
-// API
+fetch("https://dummyjson.com/products/categories");
