@@ -29,7 +29,11 @@
         </nav>
 
         <!-- Desktop Search Form (Visible > 1024px) -->
-        <form class="search-form desktop-search" id="searchFormDesktop" action="products.html">
+        <form
+          class="search-form desktop-search"
+          id="searchFormDesktop"
+          action="products.html"
+        >
           <input
             type="text"
             name="search"
@@ -44,9 +48,14 @@
 
         <div class="header-actions">
           <a href="cart.html" class="cart-btn" aria-label="Cart">
-            <i class="fa-solid fa-cart-shopping"></i><span class="cart-count" id="cartCount"></span>
+            <i class="fa-solid fa-cart-shopping"></i
+            ><span class="cart-count" id="cartCount"></span>
           </a>
-          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+          <button
+            class="mobile-nav-toggle"
+            id="mobileNavToggle"
+            aria-label="Toggle navigation"
+          >
             <i class="fa-solid fa-bars"></i>
           </button>
         </div>
@@ -57,7 +66,11 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Products</a></li>
           </ul>
-          <form class="search-form mobile-search" id="searchFormMobile" action="products.html">
+          <form
+            class="search-form mobile-search"
+            id="searchFormMobile"
+            action="products.html"
+          >
             <input
               type="text"
               name="search"
@@ -93,62 +106,68 @@
           </div>
           <div class="categories-grid" id="categoriesGrid">
             <div class="category-card" data-slug="electronics">
-              <div class="category-icon">
-                <i class="fa-solid fa-laptop"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Electronics</h3>
-                <a href="./products.html?category=electronics" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=electronics"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
 
             <div class="category-card" data-slug="jewelery">
-              <div class="category-icon">
-                <i class="fa-solid fa-gem"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Jewelry</h3>
-                <a href="./products.html?category=jewelery" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=jewelery"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
 
             <div class="category-card" data-slug="mens-clothing">
-              <div class="category-icon">
-                <i class="fa-solid fa-shirt"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Men's Clothing</h3>
-                <a href="./products.html?category=mens-clothing" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=mens-clothing"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
 
             <div class="category-card" data-slug="womens-clothing">
-              <div class="category-icon">
-                <i class="fa-solid fa-person-dress"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Women's Clothing</h3>
-                <a href="./products.html?category=womens-clothing" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=womens-clothing"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
 
             <div class="category-card" data-slug="beauty-care">
-              <div class="category-icon">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Beauty & Care</h3>
-                <a href="./products.html?category=beauty-care" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=beauty-care"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
 
             <div class="category-card" data-slug="home-living">
-              <div class="category-icon">
-                <i class="fa-solid fa-house"></i>
-              </div>
               <div class="category-info">
                 <h3 class="category-name">Home & Living</h3>
-                <a href="./products.html?category=home-living" class="category-link-text">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+                <a
+                  href="./products.html?category=home-living"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -162,116 +181,6 @@
           </div>
           <div class="products-grid" id="productsGrid">
             <!-- Product Card 1 -->
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <a href="product-details.html?id=1">
-                  <img src="assets/essence-mascara.png" alt="Essence Mascara Lash Princess" />
-                </a>
-                <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">Essence Mascara Lash Princess</h3>
-                <span class="product-brand">ESSENCE</span>
-                <div class="product-rating">
-                  <i class="fa-solid fa-star"></i> 2.56 <span>(3 reviews)</span>
-                </div>
-                <div class="product-price">
-                  <span class="current-price">$9.99</span>
-                  <span class="original-price">$11.16</span>
-                </div>
-                <div class="product-actions">
-                  <button class="add-to-cart-btn">
-                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product Card 2 -->
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <a href="product-details.html?id=2">
-                  <img src="assets/eyeshadow-palette.png" alt="Eyeshadow Palette with Mirror" />
-                </a>
-                <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">Eyeshadow Palette with Mirror</h3>
-                <span class="product-brand">GLAMOUR BEAUTY</span>
-                <div class="product-rating">
-                  <i class="fa-solid fa-star"></i> 2.86 <span>(3 reviews)</span>
-                </div>
-                <div class="product-price">
-                  <span class="current-price">$19.99</span>
-                  <span class="original-price">$24.43</span>
-                </div>
-                <div class="product-actions">
-                  <button class="add-to-cart-btn">
-                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product Card 3 -->
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <a href="product-details.html?id=3">
-                  <img src="assets/powder-canister.png" alt="Powder Canister" />
-                </a>
-                <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">Powder Canister</h3>
-                <span class="product-brand">VELVET TOUCH</span>
-                <div class="product-rating">
-                  <i class="fa-solid fa-star"></i> 4.64 <span>(3 reviews)</span>
-                </div>
-                <div class="product-price">
-                  <span class="current-price">$14.99</span>
-                  <span class="original-price">$16.63</span>
-                </div>
-                <div class="product-actions">
-                  <button class="add-to-cart-btn">
-                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product Card 4 -->
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <a href="product-details.html?id=4">
-                  <img src="assets/red-lipstick.png" alt="Red Lipstick" />
-                </a>
-                <button class="quick-view-btn" title="Quick View" aria-label="Quick View">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">Red Lipstick</h3>
-                <span class="product-brand">CHIC COSMETICS</span>
-                <div class="product-rating">
-                  <i class="fa-solid fa-star"></i> 4.36 <span>(3 reviews)</span>
-                </div>
-                <div class="product-price">
-                  <span class="current-price">$12.99</span>
-                  <span class="original-price">$14.79</span>
-                </div>
-                <div class="product-actions">
-                  <button class="add-to-cart-btn">
-                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
