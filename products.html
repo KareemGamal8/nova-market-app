@@ -100,38 +100,6 @@
                   <!-- Categories will be dynamically populated -->
                 </select>
               </div>
-
-              <div class="filter-group">
-                <span class="filter-label">Price Range ($)</span>
-                <div class="price-range-inputs">
-                  <input type="number" id="minPrice" placeholder="Min" class="price-input" min="0" />
-                  <span class="price-separator">-</span>
-                  <input type="number" id="maxPrice" placeholder="Max" class="price-input" min="0" />
-                </div>
-              </div>
-
-              <div class="filter-group">
-                <span class="filter-label">Minimum Rating</span>
-                <div class="rating-filter-options">
-                  <label class="rating-radio-label">
-                    <input type="radio" name="ratingFilter" value="0" checked />
-                    <span>All Ratings</span>
-                  </label>
-                  <label class="rating-radio-label">
-                    <input type="radio" name="ratingFilter" value="4" />
-                    <span>4.0 ★ & above</span>
-                  </label>
-                  <label class="rating-radio-label">
-                    <input type="radio" name="ratingFilter" value="3" />
-                    <span>3.0 ★ & above</span>
-                  </label>
-                  <label class="rating-radio-label">
-                    <input type="radio" name="ratingFilter" value="2" />
-                    <span>2.0 ★ & above</span>
-                  </label>
-                </div>
-              </div>
-
               <button class="reset-filters-btn" id="resetFiltersBtn">
                 <i class="fa-solid fa-rotate-left"></i> Reset Filters
               </button>
@@ -149,11 +117,9 @@
                 <div class="sort-container">
                   <label for="sortBy" class="sort-label">Sort By:</label>
                   <select id="sortBy" class="sort-select">
-                    <option value="featured">Featured</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="rating-desc">Rating: High to Low</option>
+                    <option value="">Featured</option>
                     <option value="title-asc">Alphabetical: A-Z</option>
+                    <option value="title-desc">Alphabetical: Z-A</option>
                   </select>
                 </div>
               </div>

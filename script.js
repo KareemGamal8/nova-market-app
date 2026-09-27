@@ -238,67 +238,108 @@ const createProductCard = (product) => {
 };
 
 let currentPage = 1;
-const LIMIT = 12;
-let allProducts = [];
-let filteredProducts = [];
+const LIMIT = 10;
+let totalProducts = 0;
+
+const getProductsState = () => {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    search: params.get("search") || params.get("q") || "",
+    category: params.get("category") || "",
+    sort: params.get("sort") || "",
+    page: parseInt(params.get("page"), 10) || 1,
+  };
+};
+
+const updateProductsURL = (newState) => {
+  const state = { ...getProductsState(), ...newState };
+  const url = new URL(window.location);
+
+  if (state.search) url.searchParams.set("search", state.search);
+  else url.searchParams.delete("search");
+
+  if (state.category) url.searchParams.set("category", state.category);
+  else url.searchParams.delete("category");
+
+  if (state.sort) url.searchParams.set("sort", state.sort);
+  else url.searchParams.delete("sort");
+
+  if (state.page && state.page > 1) url.searchParams.set("page", state.page);
+  else url.searchParams.delete("page");
+
+  window.history.pushState({}, "", url);
+};
+
+const syncUIWithURL = () => {
+  const { search, category, sort, page } = getProductsState();
+  const sortBySelect = document.getElementById("sortBy");
+  const categoryFilterSelect = document.getElementById("categoryFilter");
+
+  if (sortBySelect) sortBySelect.value = sort;
+  if (categoryFilterSelect) categoryFilterSelect.value = category;
+
+  document.querySelectorAll(".search-input").forEach((input) => {
+    input.value = search;
+  });
+
+  currentPage = page || 1;
+};
 
 const updatePaginationState = () => {
   if (previousBtn) previousBtn.disabled = currentPage === 1;
-  if (nextBtn) nextBtn.disabled = currentPage * LIMIT >= filteredProducts.length;
+  if (nextBtn) nextBtn.disabled = currentPage * LIMIT >= totalProducts;
 };
 
-const applyFiltersAndRender = (resetPage = false) => {
-  if (!productsGrid) return;
+const getProductsURL = () => {
+  const { search, category, sort } = getProductsState();
+  const skip = (currentPage - 1) * LIMIT;
+  let url = "https://dummyjson.com/products";
 
-  if (resetPage) {
-    currentPage = 1;
+  if (category) {
+    url = `https://dummyjson.com/products/category/${category}`;
   }
 
-  const minPriceInput = document.getElementById("minPrice");
-  const maxPriceInput = document.getElementById("maxPrice");
-  const ratingRadio = document.querySelector('input[name="ratingFilter"]:checked');
-  const sortBySelect = document.getElementById("sortBy");
+  if (search) {
+    url = "https://dummyjson.com/products/search";
+  }
 
-  const minPrice = minPriceInput && minPriceInput.value ? Number(minPriceInput.value) : 0;
-  const maxPrice = maxPriceInput && maxPriceInput.value ? Number(maxPriceInput.value) : Infinity;
-  const minRating = ratingRadio ? Number(ratingRadio.value) : 0;
-
-  // Filter products
-  filteredProducts = allProducts.filter((product) => {
-    const price = product.price;
-    const rating = product.rating || 0;
-    return price >= minPrice && price <= maxPrice && rating >= minRating;
+  const params = new URLSearchParams({
+    limit: LIMIT,
+    skip,
   });
 
-  // Sort products
-  const sortBy = sortBySelect ? sortBySelect.value : "featured";
-  if (sortBy === "price-asc") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sortBy === "price-desc") {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  } else if (sortBy === "rating-desc") {
-    filteredProducts.sort((a, b) => b.rating - a.rating);
-  } else if (sortBy === "title-asc") {
-    filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
-  } else if (sortBy === "featured") {
-    filteredProducts.sort((a, b) => a.id - b.id);
+  if (search) {
+    params.set("q", search);
   }
 
-  // Update product results count
+  if (sort === "title-asc") {
+    params.set("sortBy", "title");
+    params.set("order", "asc");
+  }
+
+  if (sort === "title-desc") {
+    params.set("sortBy", "title");
+    params.set("order", "desc");
+  }
+
+  return `${url}?${params.toString()}`;
+};
+
+const renderProducts = (products) => {
+  if (!productsGrid) return;
+
   const countTextEl = document.getElementById("productsCount");
   if (countTextEl) {
-    const totalCount = filteredProducts.length;
-    if (totalCount === 0) {
+    if (totalProducts === 0) {
       countTextEl.textContent = "0 products found";
     } else {
       const startIdx = (currentPage - 1) * LIMIT + 1;
-      const endIdx = Math.min(currentPage * LIMIT, totalCount);
-      countTextEl.textContent = `Showing ${startIdx}-${endIdx} of ${totalCount} products`;
+      const endIdx = Math.min(currentPage * LIMIT, totalProducts);
+      countTextEl.textContent = `Showing ${startIdx}-${endIdx} of ${totalProducts} products`;
     }
   }
 
-  // Render products
-  if (filteredProducts.length === 0) {
+  if (products.length === 0) {
     productsGrid.innerHTML = `
       <div class="no-products" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
         <i class="fa-solid fa-face-frown" style="font-size: 3rem; color: var(--primary-color);"></i>
@@ -309,31 +350,14 @@ const applyFiltersAndRender = (resetPage = false) => {
     return;
   }
 
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * LIMIT,
-    currentPage * LIMIT
-  );
-
-  productsGrid.innerHTML = paginatedProducts
+  productsGrid.innerHTML = products
     .map((product) => createProductCard(product))
     .join("");
-
   updatePaginationState();
 };
 
 const loadProductsData = async () => {
   if (!productsGrid) return;
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const searchQuery = urlParams.get("search");
-  
-  const categoryFilterSelect = document.getElementById("categoryFilter");
-  let category = "";
-  if (categoryFilterSelect) {
-    category = categoryFilterSelect.value;
-  } else {
-    category = urlParams.get("category") || "";
-  }
 
   productsGrid.innerHTML = `
     <div class="loading-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-size: 1.2rem;">
@@ -342,19 +366,10 @@ const loadProductsData = async () => {
   `;
 
   try {
-    let url = "";
-    if (category) {
-      url = `https://dummyjson.com/products/category/${category}?limit=200`;
-    } else if (searchQuery) {
-      url = `https://dummyjson.com/products/search?q=${encodeURIComponent(searchQuery)}&limit=200`;
-    } else {
-      url = `https://dummyjson.com/products?limit=200`;
-    }
-
-    const res = await fetch(url);
+    const res = await fetch(getProductsURL());
     const data = await res.json();
-    allProducts = data.products || [];
-    applyFiltersAndRender(true);
+    totalProducts = data.total || 0;
+    renderProducts(data.products || []);
   } catch (error) {
     console.error("Error loading products:", error);
     productsGrid.innerHTML = `
@@ -372,65 +387,44 @@ const initFilters = async () => {
   try {
     const res = await fetch("https://dummyjson.com/products/categories");
     const categories = await res.json();
-    
+
     categories.sort((a, b) => a.name.localeCompare(b.name));
-    
+
     categories.forEach((cat) => {
       const option = document.createElement("option");
       option.value = cat.slug;
       option.textContent = cat.name;
       categoryFilterSelect.appendChild(option);
     });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryQuery = urlParams.get("category");
-    if (categoryQuery) {
-      categoryFilterSelect.value = categoryQuery;
-    }
   } catch (error) {
     console.error("Error populating category dropdown:", error);
   }
 
   categoryFilterSelect.addEventListener("change", () => {
-    const url = new URL(window.location);
-    url.searchParams.delete("search");
-    if (categoryFilterSelect.value) {
-      url.searchParams.set("category", categoryFilterSelect.value);
-    } else {
-      url.searchParams.delete("category");
-    }
-    window.history.pushState({}, "", url);
+    currentPage = 1;
+    updateProductsURL({
+      category: categoryFilterSelect.value,
+      search: "",
+      page: 1,
+    });
     loadProductsData();
   });
 
-  const minPriceInput = document.getElementById("minPrice");
-  const maxPriceInput = document.getElementById("maxPrice");
-  if (minPriceInput) minPriceInput.addEventListener("input", () => applyFiltersAndRender(true));
-  if (maxPriceInput) maxPriceInput.addEventListener("input", () => applyFiltersAndRender(true));
-
-  document.querySelectorAll('input[name="ratingFilter"]').forEach((radio) => {
-    radio.addEventListener("change", () => applyFiltersAndRender(true));
-  });
-
   const sortBySelect = document.getElementById("sortBy");
-  if (sortBySelect) sortBySelect.addEventListener("change", () => applyFiltersAndRender(true));
+  if (sortBySelect) {
+    sortBySelect.addEventListener("change", () => {
+      currentPage = 1;
+      updateProductsURL({ sort: sortBySelect.value, page: 1 });
+      loadProductsData();
+    });
+  }
 
   const resetFiltersBtn = document.getElementById("resetFiltersBtn");
   if (resetFiltersBtn) {
     resetFiltersBtn.addEventListener("click", () => {
-      if (minPriceInput) minPriceInput.value = "";
-      if (maxPriceInput) maxPriceInput.value = "";
-      
-      const allRatingsRadio = document.querySelector('input[name="ratingFilter"][value="0"]');
-      if (allRatingsRadio) allRatingsRadio.checked = true;
-      if (sortBySelect) sortBySelect.value = "featured";
-      categoryFilterSelect.value = "";
-
-      const url = new URL(window.location);
-      url.searchParams.delete("search");
-      url.searchParams.delete("category");
-      window.history.pushState({}, "", url);
-
+      currentPage = 1;
+      window.history.pushState({}, "", "products.html");
+      syncUIWithURL();
       loadProductsData();
     });
   }
@@ -459,16 +453,31 @@ const initFilters = async () => {
   if (filtersBackdrop) filtersBackdrop.addEventListener("click", closeDrawer);
 };
 
+const initProductsPage = async () => {
+  if (!productsGrid) return;
+  currentPage = getProductsState().page;
+  await initFilters();
+  syncUIWithURL();
+  await loadProductsData();
+};
+
 if (productsGrid) {
-  initFilters();
-  loadProductsData();
+  initProductsPage();
 }
+
+window.addEventListener("popstate", async () => {
+  if (!productsGrid) return;
+  currentPage = getProductsState().page;
+  syncUIWithURL();
+  await loadProductsData();
+});
 
 if (previousBtn && nextBtn) {
   previousBtn.addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
-      applyFiltersAndRender(false);
+      updateProductsURL({ page: currentPage });
+      loadProductsData();
       const productsSection = document.getElementById("products");
       if (productsSection) {
         productsSection.scrollIntoView({ behavior: "smooth" });
@@ -477,9 +486,10 @@ if (previousBtn && nextBtn) {
   });
 
   nextBtn.addEventListener("click", () => {
-    if (currentPage * LIMIT < filteredProducts.length) {
+    if (currentPage * LIMIT < totalProducts) {
       currentPage++;
-      applyFiltersAndRender(false);
+      updateProductsURL({ page: currentPage });
+      loadProductsData();
       const productsSection = document.getElementById("products");
       if (productsSection) {
         productsSection.scrollIntoView({ behavior: "smooth" });
@@ -583,22 +593,30 @@ document.addEventListener("click", async (e) => {
 
 /* Search Form Event Handler for Desktop & Mobile */
 document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentQuery = urlParams.get("search");
+  const { search } = getProductsState();
 
   document.querySelectorAll(".search-form").forEach((form) => {
     const input = form.querySelector(".search-input");
-    if (input && currentQuery) {
-      input.value = currentQuery;
+    if (input && search) {
+      input.value = search;
     }
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const query = input ? input.value.trim() : "";
-      if (query) {
-        window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+      const isProductsPage = !!document.getElementById("categoryFilter");
+
+      if (isProductsPage) {
+        currentPage = 1;
+        updateProductsURL({ search: query, category: "", page: 1 });
+        syncUIWithURL();
+        loadProductsData();
       } else {
-        window.location.href = `products.html`;
+        if (query) {
+          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+        } else {
+          window.location.href = `products.html`;
+        }
       }
     });
   });
