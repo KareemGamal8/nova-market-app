@@ -1,12 +1,12 @@
 const productsGrid = document.getElementById("productsGrid");
 
-fetch("https://dummyjson.com/products?limit=12")
+const categoriesGrid = document.getElementById("categoriesGrid");
+
+fetch("https://dummyjson.com/products?limit=16")
   .then((response) => {
     return response.json();
   })
   .then((data) => {
-    console.log(data);
-
     productsGrid.innerHTML = data.products
       .map((product) => {
         return `<div class="product-card" id="${product.id}">
@@ -40,4 +40,25 @@ fetch("https://dummyjson.com/products?limit=12")
       .join("");
   });
 
-fetch("https://dummyjson.com/products/categories");
+fetch("https://dummyjson.com/products/categories")
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    categoriesGrid.innerHTML = data
+      .map((category) => {
+        return `<div class="category-card" >
+              <div class="category-info">
+                <h3 class="category-name">${category.name}</h3>
+                <a
+                  href="./products.html?category=electronics"
+                  class="category-link-text"
+                  >Explore Products <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>`;
+      })
+      .join("");
+  });
+
+// Status Code: 200 => Ok / 404 => Error
